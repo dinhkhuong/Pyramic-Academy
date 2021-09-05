@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
 
 // We are going to create a Hangman Game with Java keywords :)
 class HangmanGame {
@@ -20,6 +21,9 @@ class HangmanGame {
     private int dubErrors;
     // letters already entered by user
     private ArrayList < String > letters = new ArrayList < > ();
+    private ArrayList < String > missed = new ArrayList < > ();
+
+
 
     // Method returning randomly next word to find
     private String nextWordToFind() {
@@ -59,7 +63,9 @@ class HangmanGame {
                     index = wordToFind.indexOf(c, index + 1);
                 }
             } else {
+
                 // c not in the word => error
+                missed.add(c);
                 dubErrors++;
             }
 
@@ -102,6 +108,8 @@ class HangmanGame {
 
                 // display current state
                 System.out.println("\n" + wordFoundContent());
+                System.out.println("\n Missed letters: " + missed);
+
 
                 // check if word is found
                 if (found()) {
