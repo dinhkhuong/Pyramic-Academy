@@ -3,10 +3,10 @@ import java.util.Random;
 import java.util.Scanner;
 
 
-// We are going to create a Hangman Game with Java keywords :)
+
 class HangmanGame {
 
-    // Java Keywords
+    // words to guess
     public static final String[] WORDS = {
             "cat"
     };
@@ -38,6 +38,7 @@ class HangmanGame {
     public void newGame() {
         dubErrors = 0;
         letters.clear();
+        missed.clear();
         wordToFind = nextWordToFind();
 
         // word found initialization
@@ -95,8 +96,8 @@ class HangmanGame {
     }
 
     // Play method for our Hangman Game
-    public void play() {
-        try (Scanner input = new Scanner(System.in)) {
+    public void play(Scanner scan) {
+        //try (Scanner input = new Scanner(System.in)) {
             // we play while dubErrors is lower than max errors or user has found the word
             while (dubErrors < figure.length) {
                 // display current state
@@ -105,7 +106,7 @@ class HangmanGame {
                 System.out.println(wordFoundContent());
                 System.out.println("Guess a letter.\n");
                 // get next input from user
-                String str = input.next();
+                String str = scan.next();
 
                 // we keep just first letter
                 if (str.length() > 1) {
@@ -127,8 +128,8 @@ class HangmanGame {
                 System.out.println("\nYou lose!");
                 System.out.println("=> Word to find was : " + wordToFind);
             }
-            input.close();
-        }
+
+
 
     }
 
@@ -136,15 +137,21 @@ class HangmanGame {
         System.out.println("H A N G M A N");
         HangmanGame hangmanGame = new HangmanGame();
         hangmanGame.newGame();
-        hangmanGame.play();
-        try (Scanner inputys = new Scanner(System.in)){
-            String again = inputys.nextLine();
-            if (again.equals("yes")){
-                hangmanGame.newGame();
-                hangmanGame.play();
-            }else {}
 
-        }catch(Exception e){}
+        try (Scanner input = new Scanner(System.in)){
+            hangmanGame.play(input);
+            while (true) {
+                System.out.println("Do you want to play again?");
+                String again = input.next();
+                if (again.equals("yes")) {
+                    hangmanGame.newGame();
+                    hangmanGame.play(input);
+                }else{
+                    break;
+                }
+            }
+
+        }
 
 
 
