@@ -6,6 +6,9 @@ class TicTacToe {
 
     static String[] board;
     static String turn;
+    static ArrayList<Integer> left = new ArrayList<Integer>();
+
+
     // CheckWinner method will
     // decide the combination
     // of three box given below.
@@ -69,13 +72,26 @@ class TicTacToe {
 
     static void printBoard()
     {
-        System.out.println("| " + board[0] + " | " + board[1] + " | " + board[2] + " |");
-        System.out.println("|-----------|");
-        System.out.println("| " + board[3] + " | " + board[4] + " | " + board[5] + " |");
-        System.out.println("|-----------|");
-        System.out.println("| " + board[6] + " | " + board[7] + " | " + board[8] + " |");
+        System.out.println(board[6] + " | " + board[7] + " | " + board[8]);
+        System.out.println("-----------");
+        System.out.println(board[3] + " | " + board[4] + " | " + board[5]);
+        System.out.println("-----------");
+        System.out.println(board[0] + " | " + board[1] + " | " + board[2]);
     }
 
+    static int aiPlay(){
+        left.clear();
+        for (int b = 0;b<9;b++){
+            try {
+                if ((b+1) == (Integer.parseInt(board[b]))) {
+                    left.add(b);
+                }
+            } catch (NumberFormatException e) {
+            }
+        }
+        Collections.shuffle(left);
+        return left.get(0);
+    }
     public static void main(String[] args)
     {
         Scanner in = new Scanner(System.in);
@@ -90,49 +106,55 @@ class TicTacToe {
         System.out.println("Welcome to 3x3 Tic Tac Toe.");
         printBoard();
 
-        System.out.println(
-                "X will play first. Enter a slot number to place X in:");
+        System.out.println("X will play first. Do you want to be X or O?");
+        String input = in.nextLine();
+        //System.out.println(input);
 
         while (winner == null) {
             int numInput;
+            if (turn.equals("O")){
+            //if (!turn.equals(input)){
+                board[aiPlay()]=turn;
 
-            // Exception handling.
-            // numInput will take input from user like from 1 to 9.
-            // If it is not in range from 1 to 9.
-            // then it will show you an error "Invalid input."
-            try {
-                numInput = in.nextInt();
-                if (!(numInput > 0 && numInput <= 9)) {
+                turn ="X";
+                printBoard();
+            }else {
+                // Exception handling.
+                // numInput will take input from user like from 1 to 9.
+                // If it is not in range from 1 to 9.
+                // then it will show you an error "Invalid input."
+                try {
+                    numInput = in.nextInt();
+                    if (!(numInput > 0 && numInput <= 9)) {
+                        System.out.println(
+                                "Invalid input; re-enter slot number:");
+                        continue;
+                    }
+                } catch (InputMismatchException e) {
                     System.out.println(
                             "Invalid input; re-enter slot number:");
                     continue;
                 }
-            }
-            catch (InputMismatchException e) {
-                System.out.println(
-                        "Invalid input; re-enter slot number:");
-                continue;
-            }
 
-            // This game has two player x and O.
-            // Here is the logic to decide the turn.
-            if (board[numInput - 1].equals(
-                    String.valueOf(numInput))) {
-                board[numInput - 1] = turn;
+                // This game has two player x and O.
+                // Here is the logic to decide the turn.
+                if (board[numInput - 1].equals(
+                        String.valueOf(numInput))) {
+                    board[numInput - 1] = turn;
 
-                if (turn.equals("X")) {
-                    turn = "O";
+                    if (turn.equals("X")) {
+                        turn = "O";
+
+                    } else {
+                        turn = "X";
+                    }
+
+                    printBoard();
+                    winner = checkWinner();
+                } else {
+                    System.out.println(
+                            "Slot already taken; re-enter slot number:");
                 }
-                else {
-                    turn = "X";
-                }
-
-                printBoard();
-                winner = checkWinner();
-            }
-            else {
-                System.out.println(
-                        "Slot already taken; re-enter slot number:");
             }
         }
 
