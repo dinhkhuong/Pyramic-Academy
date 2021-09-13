@@ -7,7 +7,7 @@ class TicTacToe {
     static String[] board;
     static String turn;
     static ArrayList<Integer> left = new ArrayList<Integer>();
-
+    static HashMap<String,String>choice = new HashMap<String,String>();
 
     // CheckWinner method will
     // decide the combination
@@ -65,8 +65,9 @@ class TicTacToe {
 
         // To enter the X Or O at the exact place on board.
         System.out.println(
-                turn + "'s turn; enter a slot number to place "
-                        + turn + " in:");
+                //turn + "'s turn; enter a slot number to place " + turn + " in:"
+                "What is your next move? (1-9)");
+
         return null;
     }
 
@@ -78,7 +79,8 @@ class TicTacToe {
         System.out.println("-----------");
         System.out.println(board[0] + " | " + board[1] + " | " + board[2]);
     }
-
+    /*aiPlay will scan which move is available
+    and play pick one of them*/
     static int aiPlay(){
         left.clear();
         for (int b = 0;b<9;b++){
@@ -89,14 +91,14 @@ class TicTacToe {
             } catch (NumberFormatException e) {
             }
         }
+        //ai move is set to random
         Collections.shuffle(left);
         return left.get(0);
     }
-    public static void main(String[] args)
-    {
+    public static void game(){
         Scanner in = new Scanner(System.in);
         board = new String[9];
-        turn = "X";
+
         String winner = null;
 
         for (int a = 0; a < 9; a++) {
@@ -105,19 +107,32 @@ class TicTacToe {
 
         System.out.println("Welcome to 3x3 Tic Tac Toe.");
         printBoard();
-
-        System.out.println("X will play first. Do you want to be X or O?");
-        String input = in.nextLine();
-        //System.out.println(input);
-
+        while (true) {
+            System.out.println("Do you want to be X or O?");
+            String input = in.nextLine();
+            //System.out.println(input);
+            if (input.equals("X")) {
+                choice.put("player", input);
+                choice.put("ai", "O");
+                break;
+            } else if (input.equals("O")) {
+                choice.put("player", input);
+                choice.put("ai", "X");
+                break;
+            }
+        }
+        System.out.println("The computer will go first.");
+        turn = choice.get("ai");
+        //System.out.println(choice.get("player")+choice.get("ai"));
         while (winner == null) {
             int numInput;
-            if (turn.equals("O")){
-            //if (!turn.equals(input)){
-                board[aiPlay()]=turn;
+            if (turn.equals(choice.get("ai"))){
 
-                turn ="X";
+                board[aiPlay()]=turn;
                 printBoard();
+                winner = checkWinner();
+
+                turn =choice.get("player");
             }else {
                 // Exception handling.
                 // numInput will take input from user like from 1 to 9.
@@ -142,11 +157,11 @@ class TicTacToe {
                         String.valueOf(numInput))) {
                     board[numInput - 1] = turn;
 
-                    if (turn.equals("X")) {
-                        turn = "O";
+                    if (turn.equals(choice.get("player"))) {
+                        turn = choice.get("ai");
 
                     } else {
-                        turn = "X";
+                        turn = choice.get("player");
                     }
 
                     printBoard();
@@ -163,12 +178,30 @@ class TicTacToe {
         if (winner.equalsIgnoreCase("draw")) {
             System.out.println(
                     "It's a draw! Thanks for playing.");
+        }else if (winner.equals( choice.get("ai"))){
+            System.out.println("The computer has beaten you! You lose.");
         }
+
         // For winner -to display Congratulations! message.
         else {
             System.out.println(
-                    "Congratulations! " + winner
-                            + "'s have won! Thanks for playing.");
+                    "Congratulations! You have won! Thanks for playing.");
+        }
+    }
+    public static void main(String[] args)
+    {
+        try (Scanner x = new Scanner(System.in)){
+            game();
+            while (true) {
+                System.out.println("Do you want to play again? (yes or no)");
+                String again = x.next();
+                if (again.equals("yes")) {
+                    game();
+                }else{
+                    break;
+                }
+            }
+
         }
     }
 }
