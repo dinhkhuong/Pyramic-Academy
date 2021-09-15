@@ -204,11 +204,12 @@ public class Game {
             if ( row ==x && col+1 == y){
                 combat(grid, row ,col+1);
             }else {
-                grid[row][col] = new Land().getLand();
+
                 grid[row][col+1] = player;
                 x =row;
                 y = col+1;
             }
+            grid[row][col] = new Land().getLand();
         }else{
             System.out.println("invalid move from"+player);
         }
