@@ -6,7 +6,10 @@ import java.util.Scanner;
 public class Game {
     static Human hu = new Human();
     static Goblin gob = new Goblin();
+    static char winner;
+    static int x,y;
     public static char[][] drawGrid(){
+        x=0;y=0;winner = '0';
         Random rand = new Random();
         char[][] gridGameWorld = new char[10][10];
         /*
@@ -34,13 +37,16 @@ public class Game {
         return gridGameWorld;
     }
     public static void dislayBoard(char[][] grid){
+
         for (int row=0; row<grid.length ;row++) {
             for (int col = 0; col < grid[row].length; col++) {
                 System.out.print(grid[row][col]+"  ");
             }
             System.out.println();
-        }
 
+        }
+        System.out.println();
+        System.out.println();
     }
     public static void waitTime()throws  InterruptedException {
 
@@ -65,7 +71,10 @@ public class Game {
                 break;
         }
     }
+    public static void combat(){
 
+        winner = new Random().nextBoolean() ? hu.getPlayer() : gob.getPlayer();
+    }
 
 
     public static void printMessage(String message) throws InterruptedException {
@@ -73,7 +82,7 @@ public class Game {
     }
     public static void intructions() throws InterruptedException, ClassNotFoundException {}
     public static void fill(){}
-    public static void moveUp(char[][] grid, char player)throws InterruptedException{
+    public static void moveUp(char[][] grid, char player)throws InterruptedException,ArrayIndexOutOfBoundsException{
         int row = 0;
         int col = 0;
 
@@ -89,11 +98,21 @@ public class Game {
                 }
             }
         }
-        grid[row][col] = new Land().getLand();
-        grid[--row][col] = player;
+        if (row>0) {
+            if (row-1 ==x && col==y){
+                combat();
+            }else {
+                grid[row][col] = new Land().getLand();
+                grid[row-1][col] = player;
+                x = row-1;
+                y = col;
+            }
+        }else{
+            System.out.println("invalid move from"+player);
+        }
         dislayBoard(grid);
     }
-    public static void moveDown(char[][] grid, char player)throws InterruptedException{
+    public static void moveDown(char[][] grid, char player)throws InterruptedException,ArrayIndexOutOfBoundsException{
         int row = 0;
         int col = 0;
 
@@ -109,12 +128,22 @@ public class Game {
                 }
             }
         }
-        grid[row][col] = new Land().getLand();
-        grid[++row][col] = player;
+        if (row<9) {
+            if (row+1 ==x && col==y){
+                combat();
+            }else {
+                grid[row][col] = new Land().getLand();
+                grid[row+1][col] = player;
+                x = row+1;
+                y = col;
+            }
+        }else{
+            System.out.println("invalid move from"+player);
+        }
         dislayBoard(grid);
     }
 
-    public static void moveLeft(char[][] grid, char player)throws InterruptedException{
+    public static void moveLeft(char[][] grid, char player)throws InterruptedException,ArrayIndexOutOfBoundsException{
         int row = 0;
         int col = 0;
 
@@ -130,11 +159,21 @@ public class Game {
                 }
             }
         }
-        grid[row][col] = new Land().getLand();
-        grid[row][--col] = player;
+        if (col>0){
+            if (row ==x && col-1 ==y){
+                combat();
+            }else {
+                grid[row][col] = new Land().getLand();
+                grid[row][col-1] = player;
+                x = row;
+                y = col-1;
+            }
+        }else{
+            System.out.println("invalid move from"+player);
+        }
         dislayBoard(grid);
     }
-    public static void moveRight(char[][] grid, char player)throws InterruptedException{
+    public static void moveRight(char[][] grid, char player)throws InterruptedException,ArrayIndexOutOfBoundsException{
         int row = 0;
         int col = 0;
 
@@ -150,14 +189,24 @@ public class Game {
                 }
             }
         }
-        grid[row][col] = new Land().getLand();;
-        grid[row][++col] = player;
+        if (col<9){
+            if ( row ==x && col+1 == y){
+                combat();
+            }else {
+                grid[row][col] = new Land().getLand();
+                grid[row][col+1] = player;
+                x =row;
+                y = col+1;
+            }
+        }else{
+            System.out.println("invalid move from"+player);
+        }
         dislayBoard(grid);
     }
     public static void main(String[] args)throws InterruptedException, ClassNotFoundException{
         char[][] gridGameBoard = drawGrid();
         Scanner scan = new Scanner(System.in);
-        while (true) {
+        while (winner == '0') {
         String move = scan.nextLine();
 
             switch (move) {
@@ -183,8 +232,14 @@ public class Game {
                 default:
                     printMessage("Invalid moves cases you to lose that move");
             }
-            gmove(gridGameBoard);
+            Thread.sleep(2000L);
+            if (winner!='0'){
+                break;
+            }else {
+                gmove(gridGameBoard);
+            }
         }
+        System.out.println("The winner is " + winner);
     }
 }
 /*
