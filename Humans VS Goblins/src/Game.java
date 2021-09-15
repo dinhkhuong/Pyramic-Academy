@@ -71,9 +71,14 @@ public class Game {
                 break;
         }
     }
-    public static void combat(){
+    public static void combat(char[][] cbloc,int a, int b) throws InterruptedException{
+        cbloc[a][b]='\u2694';
+        dislayBoard(cbloc);
+
+        Thread.sleep(6000L);
 
         winner = new Random().nextBoolean() ? hu.getPlayer() : gob.getPlayer();
+        cbloc[a][b] =winner;
     }
 
 
@@ -100,13 +105,16 @@ public class Game {
         }
         if (row>0) {
             if (row-1 ==x && col==y){
-                combat();
+                combat(grid,row-1,col);
+
             }else {
-                grid[row][col] = new Land().getLand();
+
                 grid[row-1][col] = player;
+
                 x = row-1;
                 y = col;
             }
+            grid[row][col] = new Land().getLand();
         }else{
             System.out.println("invalid move from"+player);
         }
@@ -130,13 +138,15 @@ public class Game {
         }
         if (row<9) {
             if (row+1 ==x && col==y){
-                combat();
+                combat(grid, row+1,col);
+
             }else {
-                grid[row][col] = new Land().getLand();
+
                 grid[row+1][col] = player;
                 x = row+1;
                 y = col;
             }
+            grid[row][col] = new Land().getLand();
         }else{
             System.out.println("invalid move from"+player);
         }
@@ -161,13 +171,14 @@ public class Game {
         }
         if (col>0){
             if (row ==x && col-1 ==y){
-                combat();
+                combat(grid,row, col-1);
             }else {
-                grid[row][col] = new Land().getLand();
+
                 grid[row][col-1] = player;
                 x = row;
                 y = col-1;
             }
+            grid[row][col] = new Land().getLand();
         }else{
             System.out.println("invalid move from"+player);
         }
@@ -191,7 +202,7 @@ public class Game {
         }
         if (col<9){
             if ( row ==x && col+1 == y){
-                combat();
+                combat(grid, row ,col+1);
             }else {
                 grid[row][col] = new Land().getLand();
                 grid[row][col+1] = player;
