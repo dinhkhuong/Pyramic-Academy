@@ -17,7 +17,7 @@ public class SeaShip extends Ship {
     public void setX(int afd){
         x = afd;
     }
-    public int gety(){
+    public int getY(){
         return y;
     }
     public void setY(int afd){
@@ -26,8 +26,33 @@ public class SeaShip extends Ship {
     public boolean getVertHor(){
         return vertHor;
     }
-    public void setVertHor(boolean ah){
-        vertHor = ah;
+    public void setVertHor(String yn){
+        switch (yn){
+            case "yes":
+            case "y":
+            case "YES":
+            case "v":
+            case "V":
+                vertHor = true;
+                break;
+            case "no":
+            case "n":
+            case "NO":
+            case "h":
+            case "H":
+                vertHor = false;
+                break;
+        }
+
     }
+
+    private boolean verify=false;
+    public boolean getVerify(){
+        return verify;
+    }
+    public void setVerify(boolean b){
+        verify = b;
+    }
+
 
 }
