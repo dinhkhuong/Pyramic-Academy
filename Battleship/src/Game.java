@@ -10,12 +10,15 @@ public class Game {
         ask.askCoor(sea,one);
         ask.askCoor(sea,two);
         ask.printShip(sea);
-        while (winner!= one.getPlayerName()||winner!=two.getPlayerName()){
-            ask.printGame(sea,one,two);
-            if (winner!= one.getPlayerName()||winner!=two.getPlayerName()) {
-                ask.printGame(sea, two,one);
-            }else if(winner== one.getPlayerName()||winner==two.getPlayerName()) break;
+        while (winner!= one.getPlayerName()&&winner!=two.getPlayerName()){
+            winner = ask.printGame(sea,one,two)? one.getPlayerName() : null;
+            if (winner!= one.getPlayerName()&&winner!=two.getPlayerName()) {
+                winner = ask.printGame(sea,two,one)? two.getPlayerName(): null;
+            }else{ //if(winner== one.getPlayerName()||winner==two.getPlayerName()) {
+                break;
+            }
         }
+        System.out.println("Winner: "+winner);
     }
 
 }

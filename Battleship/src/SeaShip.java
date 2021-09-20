@@ -6,6 +6,11 @@ public class SeaShip extends Ship {
     private String playerName;
     private int x,y;
     private boolean vertHor;
+    private boolean sink=false;
+    private int noOfHit=0;
+    public boolean getSink(){
+        return sink;
+    }
     //private HashSet<Integer[]> hit = new HashSet<Integer[]>();
     private Point[] hitPoint = new Point[5];
     public void setHit(int a, int b, boolean verHor){
@@ -23,9 +28,14 @@ public class SeaShip extends Ship {
         for(int i=0;i<hitPoint.length;i++){
             //if((int)hitPoint[i].getX()==a && (int)hitPoint[i].getY()==b){
             if (hitPoint[i].equals(new Point(a,b))){
+                hitPoint[i].setLocation(0,0);
+                noOfHit++;
+                if(noOfHit==hitPoint.length)sink=true;
                 return true;
             }
+
         }
+
         return false;
     }
     //private ArrayList<Integer> noHit = new ArrayList<Integer>();

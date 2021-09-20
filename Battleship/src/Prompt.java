@@ -43,14 +43,17 @@ public class Prompt {
             }
         }
     }
-    public void printGame(Board bo, SeaShip mine,SeaShip enemy){
+    public boolean printGame(Board bo, SeaShip mine,SeaShip enemy){
         System.out.println(mine.getPlayerName()+" enter the coordinates for an attack: ");
         int x = scan.nextInt();
         int y = scan.nextInt();
         bo.fire(x,y);
         printBoard(bo);
         if(enemy.getHit(x,y)){
-            System.out.println("got it");
+            if (enemy.getSink()){
+                return true;
+            }
         }
+        return false;
     }
 }
