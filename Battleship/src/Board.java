@@ -36,8 +36,8 @@ public class Board {
         }
         shipGrid [0][0]= ' ';
     }
-    public void setElement(int a, int b,boolean ch){
-        grid[a][b] = ch ? 'x':'m';
+    public void fire(int a, int b)throws ArrayIndexOutOfBoundsException{
+        grid[a][b] = (shipGrid[a][b] == 'c') ? 'x':'m';
     }
     public char getElement(int a, int b){
         return grid[a][b];
@@ -83,7 +83,9 @@ public class Board {
 
            }
        }
-       //verify = false;
+       if(ship.getVerify()){
+           ship.setHit(ship.getX(),ship.getY(),ship.getVertHor());
+       }
     }
 
 }

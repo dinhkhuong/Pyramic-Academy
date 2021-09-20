@@ -1,10 +1,34 @@
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class SeaShip extends Ship {
     private String playerName;
     private int x,y;
     private boolean vertHor;
-    private ArrayList<Integer> noHit = new ArrayList<Integer>();
+    //private HashSet<Integer[]> hit = new HashSet<Integer[]>();
+    private Point[] hitPoint = new Point[5];
+    public void setHit(int a, int b, boolean verHor){
+        if(verHor) {
+            for (int i = 0; i < hitPoint.length; i++) {
+                hitPoint[i] = new Point(a + i, b);
+            }
+        }else {
+            for (int i = 0; i < hitPoint.length; i++) {
+                hitPoint[i] = new Point(a, b+i);
+            }
+        }
+    }
+    public boolean getHit(int a, int b){
+        for(int i=0;i<hitPoint.length;i++){
+            //if((int)hitPoint[i].getX()==a && (int)hitPoint[i].getY()==b){
+            if (hitPoint[i].equals(new Point(a,b))){
+                return true;
+            }
+        }
+        return false;
+    }
+    //private ArrayList<Integer> noHit = new ArrayList<Integer>();
     public String getPlayerName(){
         return playerName;
     }
