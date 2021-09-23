@@ -64,9 +64,7 @@ class TicTacToe {
         }
 
         // To enter the X Or O at the exact place on board.
-        System.out.println(
-                //turn + "'s turn; enter a slot number to place " + turn + " in:"
-                "What is your next move? (1-9)");
+
 
         return null;
     }
@@ -125,6 +123,7 @@ class TicTacToe {
         turn = choice.get("ai");
         //System.out.println(choice.get("player")+choice.get("ai"));
         while (winner == null) {
+            System.out.println();
             int numInput;
             if (turn.equals(choice.get("ai"))){
 
@@ -134,6 +133,7 @@ class TicTacToe {
 
                 turn =choice.get("player");
             }else {
+                System.out.println("What is your next move? (1-9)");
                 // Exception handling.
                 // numInput will take input from user like from 1 to 9.
                 // If it is not in range from 1 to 9.
