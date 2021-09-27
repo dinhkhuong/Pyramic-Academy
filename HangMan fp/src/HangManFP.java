@@ -102,7 +102,7 @@ public class HangManFP {
     }
 
     // Method returning the state of the word found by the user until by now
-    private String wordFoundContent() {
+    /*private String wordFoundContent() {
         StringBuilder builder = new StringBuilder();
         //Stream.of(builder).map(i->i.append(wordFound)).toString();
         for (int i = 0; i < wordFound.length; i++) {
@@ -114,7 +114,7 @@ public class HangManFP {
         }
 
         return builder.toString();
-    }
+    }*/
 
     // Play method for our Hangman Game
     public void play(Scanner scan) {
@@ -125,7 +125,8 @@ public class HangManFP {
 
             Arrays.stream(figure[dubErrors].split("/")).forEach(System.out::println);
             System.out.println("\nMissed letters: " + missed);
-            System.out.println(wordFoundContent());
+            //System.out.println(wordFoundContent());
+            Stream.of(wordFound).forEach(System.out::println);
             System.out.println("Guess a letter.\n");
             // get next input from user
             String str = scan.next();
@@ -140,7 +141,8 @@ public class HangManFP {
 
             // check if word is found
             if (found()) {
-                System.out.println("\nYes! The secret word is "+wordFoundContent()+"! You have won!");
+                //System.out.println("\nYes! The secret word is "+wordFoundContent()+"! You have won!");
+                System.out.println("\nYes! The secret word is "+String.valueOf(wordFound)+"! You have won!");
                 break;
             }
         }
