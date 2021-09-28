@@ -47,7 +47,7 @@ public class HangManFP {
     private ArrayList < String > letters = new ArrayList < > ();
     private ArrayList < String > missed = new ArrayList < > ();
 
-    public HangManFP() throws FileNotFoundException, IOException {
+    public HangManFP() {
     }
 
     // Method returning randomly next word to find
@@ -101,20 +101,7 @@ public class HangManFP {
         }
     }
 
-    // Method returning the state of the word found by the user until by now
-    /*private String wordFoundContent() {
-        StringBuilder builder = new StringBuilder();
-        //Stream.of(builder).map(i->i.append(wordFound)).toString();
-        for (int i = 0; i < wordFound.length; i++) {
-            builder.append(wordFound[i]);
 
-            if (i < wordFound.length - 1) {
-                builder.append(" ");
-            }
-        }
-
-        return builder.toString();
-    }*/
 
     // Play method for our Hangman Game
     public void play(Scanner scan) {
@@ -157,7 +144,7 @@ public class HangManFP {
 
     }
 
-    public static void main(String[] args) throws FileNotFoundException, IOException {
+    public static void main(String[] args)  {
         System.out.println("H A N G M A N");
         HangManFP hangmanGame = new HangManFP();
         hangmanGame.newGame();
